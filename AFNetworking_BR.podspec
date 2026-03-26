@@ -3,10 +3,11 @@ Pod::Spec.new do |s|
   s.version  = '4.0.2'
   s.license  = 'MIT'
   s.summary  = 'A delightful networking framework for Apple platforms.'
-  s.homepage = 'https://github.com/AFNetworking/AFNetworking'
+  s.homepage = 'https://github.com/agiapp/AFNetworking_BR'
   s.social_media_url = 'https://twitter.com/AFNetworking'
   s.authors  = { 'Mattt Thompson' => 'm@mattt.me' }
-  s.source   = { :git => 'https://github.com/AFNetworking/AFNetworking.git', :tag => s.version }
+  s.source   = { :git => 'https://github.com/agiapp/AFNetworking_BR.git', :tag => s.version }
+  s.resource_bundles = { 'AFNetworking.Privacy' => 'AFNetworking/PrivacyInfo.xcprivacy' }
 
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
