@@ -8,11 +8,12 @@ Pod::Spec.new do |s|
   s.authors  = { 'Mattt Thompson' => 'm@mattt.me' }
   s.source   = { :git => 'https://github.com/agiapp/AFNetworking_BR.git', :tag => s.version }
   s.resource_bundles = { 'AFNetworking.Privacy' => 'AFNetworking/PrivacyInfo.xcprivacy' }
-
-  s.ios.deployment_target = '9.0'
-  s.osx.deployment_target = '10.10'
-  s.watchos.deployment_target = '2.0'
-  s.tvos.deployment_target = '9.0'
+    
+  # 最低部署版本
+  s.ios.deployment_target = '12.0'
+  s.osx.deployment_target = '10.13'
+  s.watchos.deployment_target = '4.0'
+  s.tvos.deployment_target = '12.0'
 
   s.ios.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.alamofire.AFNetworking' }
   s.osx.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.alamofire.AFNetworking' }
@@ -30,9 +31,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Reachability' do |ss|
-    ss.ios.deployment_target = '9.0'
-    ss.osx.deployment_target = '10.10'
-    ss.tvos.deployment_target = '9.0'
+    ss.ios.deployment_target = '12.0'
+    ss.osx.deployment_target = '10.13'
+    ss.tvos.deployment_target = '12.0'
 
     ss.source_files = 'AFNetworking/AFNetworkReachabilityManager.{h,m}'
   end
@@ -48,8 +49,8 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'UIKit' do |ss|
-    ss.ios.deployment_target = '9.0'
-    ss.tvos.deployment_target = '9.0'
+    ss.ios.deployment_target = '12.0'
+    ss.tvos.deployment_target = '12.0'
     ss.dependency 'AFNetworking/NSURLSession'
 
     ss.source_files = 'UIKit+AFNetworking'
