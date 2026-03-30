@@ -20,6 +20,8 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+
+#if !TARGET_OS_WATCH
 #import <SystemConfiguration/SystemConfiguration.h>
 
 typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
@@ -211,3 +213,4 @@ FOUNDATION_EXPORT NSString * const AFNetworkingReachabilityNotificationStatusIte
 FOUNDATION_EXPORT NSString * AFStringFromNetworkReachabilityStatus(AFNetworkReachabilityStatus status);
 
 NS_ASSUME_NONNULL_END
+#endif

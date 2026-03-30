@@ -20,9 +20,12 @@
 // THE SOFTWARE.
 
 #import "AFNetworkReachabilityManager.h"
+#if !TARGET_OS_WATCH
 
-#import <string.h>
-#import <sys/socket.h>
+#import <netinet/in.h>
+#import <arpa/inet.h>
+#import <ifaddrs.h>
+#import <netdb.h>
 
 NSString * const AFNetworkingReachabilityDidChangeNotification = @"com.alamofire.networking.reachability.change";
 NSString * const AFNetworkingReachabilityNotificationStatusItem = @"AFNetworkingReachabilityNotificationStatusItem";
@@ -142,14 +145,16 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
 + (instancetype)manager
 {
-    struct sockaddr_storage address;
-    memset(&address, 0, sizeof(address));
 #if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 90000) || (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
-    address.ss_len = sizeof(address);
-    address.ss_family = AF_INET6;
+    struct sockaddr_in6 address;
+    bzero(&address, sizeof(address));
+    address.sin6_len = sizeof(address);
+    address.sin6_family = AF_INET6;
 #else
-    address.ss_len = sizeof(address);
-    address.ss_family = AF_INET;
+    struct sockaddr_in address;
+    bzero(&address, sizeof(address));
+    address.sin_len = sizeof(address);
+    address.sin_family = AF_INET;
 #endif
     return [self managerForAddress:&address];
 }
@@ -221,7 +226,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     SCNetworkReachabilitySetCallback(self.networkReachability, AFNetworkReachabilityCallback, &context);
     SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), kCFRunLoopCommonModes);
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^{
         SCNetworkReachabilityFlags flags;
         if (SCNetworkReachabilityGetFlags(self.networkReachability, &flags)) {
             AFPostReachabilityStatusChange(flags, callback);
@@ -260,3 +265,4 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 }
 
 @end
+#endif
