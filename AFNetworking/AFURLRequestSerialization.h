@@ -22,10 +22,8 @@
 #import <Foundation/Foundation.h>
 #import <TargetConditionals.h>
 
-#if TARGET_OS_IOS || TARGET_OS_TV
+#if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
-#elif TARGET_OS_WATCH
-#import <WatchKit/WatchKit.h>
 #endif
 
 NS_ASSUME_NONNULL_BEGIN

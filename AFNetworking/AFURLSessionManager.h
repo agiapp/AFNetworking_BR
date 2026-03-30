@@ -26,9 +26,7 @@
 #import "AFURLRequestSerialization.h"
 #import "AFSecurityPolicy.h"
 #import "AFCompatibilityMacros.h"
-#if !TARGET_OS_WATCH
 #import "AFNetworkReachabilityManager.h"
-#endif
 
 /**
  `AFURLSessionManager` creates and manages an `NSURLSession` object based on a specified `NSURLSessionConfiguration` object, which conforms to `<NSURLSessionTaskDelegate>`, `<NSURLSessionDataDelegate>`, `<NSURLSessionDownloadDelegate>`, and `<NSURLSessionDelegate>`.
@@ -116,7 +114,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
 
-#if !TARGET_OS_WATCH
 ///--------------------------------------
 /// @name Monitoring Network Reachability
 ///--------------------------------------
@@ -125,7 +122,6 @@ NS_ASSUME_NONNULL_BEGIN
  The network reachability manager. `AFURLSessionManager` uses the `sharedManager` by default.
  */
 @property (readwrite, nonatomic, strong) AFNetworkReachabilityManager *reachabilityManager;
-#endif
 
 ///----------------------------
 /// @name Getting Session Tasks
@@ -381,7 +377,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param block A block object to be executed when a session task is completed. The block has no return value, and takes three arguments: the session, the task, and any metrics that were collected in the process of executing the task.
  */
 #if AF_CAN_INCLUDE_SESSION_TASK_METRICS
-- (void)setTaskDidFinishCollectingMetricsBlock:(nullable void (^)(NSURLSession *session, NSURLSessionTask *task, NSURLSessionTaskMetrics * _Nullable metrics))block AF_API_AVAILABLE(ios(10), macosx(10.12), watchos(3), tvos(10));
+- (void)setTaskDidFinishCollectingMetricsBlock:(nullable void (^)(NSURLSession *session, NSURLSessionTask *task, NSURLSessionTaskMetrics * _Nullable metrics))block AF_API_AVAILABLE(ios(10), macosx(10.12));
 #endif
 ///-------------------------------------------
 /// @name Setting Data Task Delegate Callbacks

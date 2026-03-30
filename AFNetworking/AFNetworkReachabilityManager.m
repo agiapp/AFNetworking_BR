@@ -20,12 +20,9 @@
 // THE SOFTWARE.
 
 #import "AFNetworkReachabilityManager.h"
-#if !TARGET_OS_WATCH
 
-#import <netinet/in.h>
-#import <arpa/inet.h>
-#import <ifaddrs.h>
-#import <netdb.h>
+#import <string.h>
+#import <sys/socket.h>
 
 NSString * const AFNetworkingReachabilityDidChangeNotification = @"com.alamofire.networking.reachability.change";
 NSString * const AFNetworkingReachabilityNotificationStatusItem = @"AFNetworkingReachabilityNotificationStatusItem";
@@ -145,16 +142,14 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
 + (instancetype)manager
 {
+    struct sockaddr_storage address;
+    memset(&address, 0, sizeof(address));
 #if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 90000) || (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= 101100)
-    struct sockaddr_in6 address;
-    bzero(&address, sizeof(address));
-    address.sin6_len = sizeof(address);
-    address.sin6_family = AF_INET6;
+    address.ss_len = sizeof(address);
+    address.ss_family = AF_INET6;
 #else
-    struct sockaddr_in address;
-    bzero(&address, sizeof(address));
-    address.sin_len = sizeof(address);
-    address.sin_family = AF_INET;
+    address.ss_len = sizeof(address);
+    address.ss_family = AF_INET;
 #endif
     return [self managerForAddress:&address];
 }
@@ -265,4 +260,3 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 }
 
 @end
-#endif

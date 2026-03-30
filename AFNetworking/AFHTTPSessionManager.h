@@ -20,9 +20,7 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#if !TARGET_OS_WATCH
 #import <SystemConfiguration/SystemConfiguration.h>
-#endif
 #import <TargetConditionals.h>
 
 #import "AFURLSessionManager.h"
