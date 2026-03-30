@@ -22,8 +22,10 @@
 #import <Foundation/Foundation.h>
 #import <TargetConditionals.h>
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV
 #import <UIKit/UIKit.h>
+#elif TARGET_OS_WATCH
+#import <WatchKit/WatchKit.h>
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
@@ -276,7 +278,7 @@ forHTTPHeaderField:(NSString *)field;
 #pragma mark -
 
 /**
- The `AFMultipartFormData` protocol defines the methods supported by the parameter in the block argument of `AFHTTPRequestSerializer -multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:error:`.
+ The `AFMultipartFormData` protocol defines the methods supported by the parameter in the block argument of `AFHTTPRequestSerializer -multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:`.
  */
 @protocol AFMultipartFormData
 

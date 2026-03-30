@@ -25,6 +25,8 @@
 
 #if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
+#elif TARGET_OS_WATCH
+#import <WatchKit/WatchKit.h>
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
 #import <Cocoa/Cocoa.h>
 #endif
@@ -527,7 +529,7 @@ id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 
 #pragma mark -
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
@@ -667,8 +669,11 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
     self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"image/tiff", @"image/jpeg", @"image/gif", @"image/png", @"image/ico", @"image/x-icon", @"image/bmp", @"image/x-bmp", @"image/x-xbitmap", @"image/x-win-bitmap", nil];
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV
     self.imageScale = [[UIScreen mainScreen] scale];
+    self.automaticallyInflatesResponseImage = YES;
+#elif TARGET_OS_WATCH
+    self.imageScale = [[WKInterfaceDevice currentDevice] screenScale];
     self.automaticallyInflatesResponseImage = YES;
 #endif
 
@@ -687,7 +692,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         }
     }
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
     if (self.automaticallyInflatesResponseImage) {
         return AFInflatedImageFromResponseWithDataAtScale((NSHTTPURLResponse *)response, data, self.imageScale);
     } else {
@@ -717,7 +722,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         return nil;
     }
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS  || TARGET_OS_TV || TARGET_OS_WATCH
     NSNumber *imageScale = [decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(imageScale))];
 #if CGFLOAT_IS_DOUBLE
     self.imageScale = [imageScale doubleValue];
@@ -734,7 +739,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 - (void)encodeWithCoder:(NSCoder *)coder {
     [super encodeWithCoder:coder];
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
     [coder encodeObject:@(self.imageScale) forKey:NSStringFromSelector(@selector(imageScale))];
     [coder encodeBool:self.automaticallyInflatesResponseImage forKey:NSStringFromSelector(@selector(automaticallyInflatesResponseImage))];
 #endif
@@ -745,7 +750,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 - (instancetype)copyWithZone:(NSZone *)zone {
     AFImageResponseSerializer *serializer = [super copyWithZone:zone];
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
     serializer.imageScale = self.imageScale;
     serializer.automaticallyInflatesResponseImage = self.automaticallyInflatesResponseImage;
 #endif
