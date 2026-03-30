@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'AFNetworking_BR'
-  s.version  = '4.0.2'
+  s.version  = '4.0.3'
   s.license  = 'MIT'
   s.summary  = 'A delightful networking framework for Apple platforms.'
   s.homepage = 'https://github.com/agiapp/AFNetworking_BR'
@@ -12,9 +12,6 @@ Pod::Spec.new do |s|
   # 最低部署版本
   s.ios.deployment_target = '12.0'
   s.osx.deployment_target = '10.13'
-
-  s.ios.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.alamofire.AFNetworking' }
-  s.osx.pod_target_xcconfig = { 'PRODUCT_BUNDLE_IDENTIFIER' => 'com.alamofire.AFNetworking' }
 
   s.source_files = 'AFNetworking/AFNetworking.h'
 
