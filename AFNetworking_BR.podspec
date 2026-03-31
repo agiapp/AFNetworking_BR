@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name     = 'AFNetworking_BR'
   s.summary  = 'A delightful networking framework for Apple platforms.'
-  s.version  = '4.0.2'
+  s.version  = '4.0.3'
   s.license  = { :type => 'MIT', :file => 'LICENSE' }
   s.authors  = { "renbo" => "developer@irenb.com" }
   s.social_media_url = 'https://www.irenb.com'
